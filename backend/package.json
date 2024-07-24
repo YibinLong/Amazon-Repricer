@@ -1,0 +1,14 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Amazon Repricer Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yibin Long",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
