@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-    return knex.schema.createTable('users', function(table) {
+    return knex.schema.createTable('users', (table) => {
       table.increments('id').primary(); // Auto-incrementing ID column
       table.string('username').notNullable();             // Name column
       table.string('email').notNullable().unique();   // Email column with unique constraint
