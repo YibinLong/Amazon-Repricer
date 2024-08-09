@@ -1,3 +1,4 @@
 
 backend/generate_secrete.js
 backend/generated_secret.txt
+backend/.env
