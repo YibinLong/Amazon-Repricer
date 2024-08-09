@@ -10,7 +10,13 @@ const createUser = async (user) => {
 };
 
 const findUserByEmail = async (email) => {
-    return await knex('users').where({ email }).first();
+    try {
+        console.log('Finding user by email:', email);
+        return await knex('users').where({ email }).first();
+    } catch (error) {
+        console.error('Error finding user by email:', error);
+        throw error;
+    }
 };
 
 module.exports = {
