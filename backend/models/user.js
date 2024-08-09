@@ -1,7 +1,12 @@
 const knex = require('../../database/knex')
 
-const createUser = async(user) => {
-    return await knex('users').insert(user).returning('*');
+const createUser = async (user) => {
+    try {
+        return await knex('users').insert(user).returning('*');
+    } catch (error) {
+        console.error('Error creating user:', error);
+        throw error;
+    }
 };
 
 const findUserByEmail = async (email) => {
