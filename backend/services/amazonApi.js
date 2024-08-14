@@ -20,3 +20,31 @@ const getAccessToken = async () => {
         throw error;
     }    
 };
+
+const fetchOrders = async () => {
+    try {
+        const accessToken = await getAccessToken();
+
+        const requestParams = {
+            MarketplaceIds: marketplaceId,
+            CreatedAfter: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 days ago
+        }
+
+        const response = await axios.get(
+            endpoint + 'orders/v0/orders?' + qs.stringify(requestParams), {
+                headers: {
+                    'x-amz-access-token': accessToken,
+                },
+            }
+        );
+
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        throw error;
+    }
+};
+
+module.exports = {
+    fetchOrders, getAccessToken
+};
