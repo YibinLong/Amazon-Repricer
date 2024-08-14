@@ -9,6 +9,8 @@
   "author": "Yibin Long",
   "license": "ISC",
   "dependencies": {
+    "aws4": "^1.13.1",
+    "axios": "^1.7.3",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
