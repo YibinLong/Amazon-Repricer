@@ -34,3 +34,15 @@ router.put('/:id', async (req, res) => {
         res.status(500).json({ message: 'Error updating product' });
     }
 })
+
+// delete a product
+router.delete('/:id', async (req, res) => {
+    try {
+        await knex('products').where({ id: req.params.id }).del();
+        res.json({ message: 'Product deleted' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting product' });
+    }
+});
+
+module.exports = router;
