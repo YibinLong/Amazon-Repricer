@@ -24,6 +24,27 @@ const Register = () => {
             alert('Registration failed');
         }
     };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <h2>Register</h2>
+            <input 
+                type='text'
+                placeholder='Username'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+            />
+            <input
+                type='email'
+                placeholder='Email'
+                value={email}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+            />
+            <button type='submit'>Register</button>
+        </form>
+    );
 };
 
 export default Register
