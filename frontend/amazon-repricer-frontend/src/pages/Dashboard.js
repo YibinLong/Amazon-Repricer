@@ -16,6 +16,20 @@ const Dashboard = () => {
 
         fetchProducts();
     }, []);
+
+    return (
+        <div>
+            <h2>Your Products</h2>
+            <ul>
+                {products.map((product) => (
+                    <li key={product.id}>
+                        {product.name} - ${product.price}
+                        {/* TODO: add buttons to edit/delete products */}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default Dashboard;
