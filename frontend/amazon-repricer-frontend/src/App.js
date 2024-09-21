@@ -5,9 +5,13 @@ import Login from './pages/Login';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Amazon Repricer Frontend!</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        {/* TODO: add additional routes here */}
+      </Routes>
+    </Router>
   );
 }
 
