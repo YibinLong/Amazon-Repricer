@@ -22,6 +22,27 @@ const PricingRulesForm = ({ productID }) => {
             alert('Failed to set pricing rules')
         }
     }
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <h3>Set Pricing Rules</h3>
+            <input
+                type='number'
+                placeholder='Min Price'
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+                required
+            />
+            <input 
+                type='number'
+                placeholder="Max Price"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+                required
+            />
+            <button type='submit'>Save</button>  
+        </form>
+    )
 }
 
 export default PricingRulesForm
