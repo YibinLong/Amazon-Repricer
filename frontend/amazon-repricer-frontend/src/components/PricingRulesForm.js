@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const PricingRulesForm = ({ productID }) => {
+const PricingRulesForm = ({ productId }) => {
     const [minPrice, setMinPrice] = useState('')
     const [maxPrice, setMaxPrice] = useState('')
 
