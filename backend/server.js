@@ -4,6 +4,8 @@ const express = require('express');
 const authRoutes = require('./routes/auth');
 const protectedRoutes = require('./routes/protectedRoutes');
 const amazonRoutes = require('./routes/amazon');
+const productRoutes = require('./routes/products');
+const pricingRulesRoutes = require('./routes/pricingRules');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +14,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api', protectedRoutes); 
 app.use('/api/amazon', amazonRoutes)
+app.use('/api/products', productRoutes);
+app.use('/api/pricing-rules', pricingRulesRoutes);
 
 app.get('/', (req, res) => {
   res.send('Amazon Repricer Backend');
