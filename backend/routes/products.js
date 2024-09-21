@@ -23,3 +23,14 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ message: 'Error fetching product' });
     }
 });
+
+// update a product
+router.put('/:id', async (req, res) => {
+    try {
+        const { title, price, status } = req.body;
+        await knex('products').where({ id: req.params.id }).update({ title, price, status });
+        res.json({ message: 'Product updated' })
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating product' });
+    }
+})
