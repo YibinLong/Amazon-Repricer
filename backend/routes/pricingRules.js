@@ -34,3 +34,15 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ message: 'Error updating pricing rule' });
   }
 });
+
+// delete a pricing rule
+router.delete('/:id', async (req, res) => {
+  try {
+    await knex('pricing_rules').where({ id: req.params.id }).del();
+    res.json({ message: 'Pricing rule deleted' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting pricing rule' });
+  }
+});
+
+module.exports = router;
