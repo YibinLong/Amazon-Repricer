@@ -13,3 +13,13 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: 'Error creating pricing rule' });
   }
 });
+
+// read pricing rules for a product
+router.get('/product/:product_id', async (req, res) => {
+  try {
+    const rules = await knex('pricing_rules').where({ product_id: req.params.product_id });
+    res.json(rules);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching pricing rules' });
+  }
+});
