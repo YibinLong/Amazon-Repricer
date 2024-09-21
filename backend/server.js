@@ -1,7 +1,6 @@
 // server.js
 const express = require('express');
 
-
 const authRoutes = require('./routes/auth');
 const protectedRoutes = require('./routes/protectedRoutes');
 const amazonRoutes = require('./routes/amazon');
