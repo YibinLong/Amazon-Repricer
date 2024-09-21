@@ -23,3 +23,14 @@ router.get('/product/:product_id', async (req, res) => {
     res.status(500).json({ message: 'Error fetching pricing rules' });
   }
 });
+
+// update a pricing rule
+router.put('/:id', async (req, res) => {
+  try {
+    const { min_price, max_price, target_price } = req.body;
+    await knex('pricing_rules').where({ id: req.params.id }).update({ min_price, max_price, target_price });
+    res.json({ message: 'Pricing rule updated' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating pricing rule' });
+  }
+});
