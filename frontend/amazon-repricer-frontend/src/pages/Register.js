@@ -4,13 +4,14 @@ const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         // TODO: add more error handling
 
-        const response = await fetch('/api/auth/register', {
+        const response = await fetch('http://localhost:3000/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -21,7 +22,9 @@ const Register = () => {
         if (response.ok) {
             alert('Registration successful!');
         } else {
-            alert('Registration failed');
+            const errorData = await response.json(); 
+            console.error('Registration failed:', errorData); // log the error
+            setError(errorData.message || 'Registration failed. Please try again.');
         }
     };
 

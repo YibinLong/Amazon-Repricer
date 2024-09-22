@@ -7,7 +7,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch('/api/auth/login', {
+        const response = await fetch('http://localhost:3000/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,7 +20,9 @@ const Login = () => {
             localStorage.setItem('token', data.token);
             alert('Login successful!');
         } else {
-            alert('Login failed');
+            const errorData = await response.json(); 
+            console.error('Login failed:', errorData); // log the error
+            alert('Login failed: ' + (errorData.message || 'Please check your credentials.'));
         }
     }
 
