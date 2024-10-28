@@ -12,13 +12,20 @@ const Login = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify({ email, password }),
         });
 
         if (response.ok) {
             const data = await response.json();
             localStorage.setItem('token', data.token);
-            alert('Login successful!');
+            alert('Login successful! Redirecting to Amazon for authentication...');
+            if (data.redirectToAmazon) {
+                // Make a request to your backend to initiate Amazon OAuth
+                window.location.href = 'http://localhost:3000/api/amazon-auth/login';
+            } else {
+                window.location.href = '/dashboard'; // Redirect to dashboard
+            }
         } else {
             const errorData = await response.json(); 
             console.error('Login failed:', errorData); // log the error
@@ -47,4 +54,5 @@ const Login = () => {
         </form>
     );
 };
+
 export default Login;
