@@ -1,12 +1,13 @@
 const express =  require('express');
 const { fetchOrders } = require('../services/amazonApi');
+const { fetchOrders, fetchProducts } = require('../services/amazonApi');
 const knex = require('../../database/knex');
 
 const router = express.Router();
 
 router.get('/fetch-orders', async (req, res) => {
     try {
-        const ordersResponse = await fetchOrders();
+        const ordersResponse = await fetchOrders(req);
 
         const orders = ordersResponse.payload.Orders;
 
@@ -26,4 +27,5 @@ router.get('/fetch-orders', async (req, res) => {
     }
 });
 
+router.get('/products', async (req, res) => {
 module.exports = router;
