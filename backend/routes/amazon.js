@@ -1,5 +1,4 @@
 const express =  require('express');
-const { fetchOrders } = require('../services/amazonApi');
 const { fetchOrders, fetchProducts } = require('../services/amazonApi');
 const knex = require('../../database/knex');
 
@@ -28,4 +27,14 @@ router.get('/fetch-orders', async (req, res) => {
 });
 
 router.get('/products', async (req, res) => {
+    try {
+        const productsResponse = await fetchProducts(req);
+
+        res.json(productsResponse);
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        res.status(500).json({ message: "Error fetching products", error: error.message });
+    }
+});
+
 module.exports = router;
