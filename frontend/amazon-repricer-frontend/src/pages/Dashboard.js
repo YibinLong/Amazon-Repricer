@@ -10,9 +10,14 @@ const Dashboard = () => {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
+                credentials: 'include'
             });
-            const data = await response.json();
-            setProducts(data);
+            if (response.status === 401) {
+                window.location.href = '/api/amazon-auth/login'; // Redirect to Amazon OAuth
+            } else {
+                const data = await response.json();
+                setProducts(data);
+            }
         };
 
         fetchProducts();
@@ -30,6 +35,7 @@ const Dashboard = () => {
                     </li>
                 ))}
             </ul>
+            <button onClick={() => window.location.href = '/api/amazon-auth/login'}>Authorize with Amazon</button>
         </div>
     );
 };
