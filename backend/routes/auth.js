@@ -56,7 +56,11 @@ router.post('/login', async (req, res) => {
         // create a JWT token
         const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1h' });
 
-        res.json({ token });
+        // Save token in the session
+        req.session.token = token;
+
+        // Redirect to Amazon OAuth
+        res.json({ token, redirectToAmazon: true });
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ message: 'Server error' });
