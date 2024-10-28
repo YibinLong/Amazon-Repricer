@@ -25,17 +25,18 @@ const getAccessToken = async (refreshToken) => {
     }    
 };
 
-const fetchOrders = async () => {
+const fetchOrders = async (req) => {
     try {
-        const accessToken = await getAccessToken();
+        const refreshToken = req.session.refreshToken;
+        const accessToken = await getAccessToken(refreshToken);
 
         const requestParams = {
             MarketplaceIds: marketplaceId,
             CreatedAfter: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 days ago
-        }
+        };
 
         const response = await axios.get(
-            endpoint + 'orders/v0/orders?' + qs.stringify(requestParams), {
+            `${endpoint}orders/v0/orders?${qs.stringify(requestParams)}`, {
                 headers: {
                     'x-amz-access-token': accessToken,
                 },
