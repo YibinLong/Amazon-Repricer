@@ -7,7 +7,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch('http://localhost:3000/api/auth/login', {
+        const response = await fetch('http://localhost:3001/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ const Login = () => {
             alert('Login successful! Redirecting to Amazon for authentication...');
             if (data.redirectToAmazon) {
                 // Make a request to your backend to initiate Amazon OAuth
-                window.location.href = 'http://localhost:3000/api/amazon-auth/login';
+                window.location.href = 'http://localhost:3001/api/amazon-auth/login';
             } else {
                 window.location.href = '/dashboard'; // Redirect to dashboard
             }

@@ -11,11 +11,12 @@ const pricingRulesRoutes = require('./routes/pricingRules');
 const amazonAuthRoutes = require('./routes/amazonAuth');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Configure CORS to allow credentials
+// DO NOT CHANGE 3000 - accepts from 3000 (AKA frontend)
 app.use(cors({
-  origin: 'http://localhost:3001', 
+  origin: 'http://localhost:3000', 
   credentials: true
 }));
 
