@@ -2,6 +2,7 @@ const express =  require('express');
 const { fetchOrders, fetchProducts } = require('../services/amazonApi');
 const knex = require('../../database/knex');
 const checkAmazonAuth = require('../middleware/checkAmazonAuth');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 

@@ -40,6 +40,7 @@ app.use('/api/amazon', amazonRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/pricing-rules', pricingRulesRoutes);
 app.use('/api/amazon-auth', amazonAuthRoutes);
+app.use('/api/personal/products', require('./routes/personalProducts'));
 
 app.get('/', (req, res) => {
   res.send('Amazon Repricer Backend!');
