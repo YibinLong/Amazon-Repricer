@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // TODO: add more error handling
 
         const response = await fetch('http://localhost:3001/api/auth/register', {
             method: 'POST',
@@ -20,10 +20,10 @@ const Register = () => {
         });
 
         if (response.ok) {
-            alert('Registration successful!');
+            alert('Registration successful! Please login.');
+            navigate('/login');
         } else {
             const errorData = await response.json(); 
-            console.error('Registration failed:', errorData); // log the error
             setError(errorData.message || 'Registration failed. Please try again.');
         }
     };

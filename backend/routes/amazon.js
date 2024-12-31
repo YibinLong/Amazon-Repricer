@@ -1,6 +1,7 @@
 const express =  require('express');
 const { fetchOrders, fetchProducts } = require('../services/amazonApi');
 const knex = require('../../database/knex');
+const checkAmazonAuth = require('../middleware/checkAmazonAuth');
 
 const router = express.Router();
 
@@ -26,10 +27,9 @@ router.get('/fetch-orders', async (req, res) => {
     }
 });
 
-router.get('/products', async (req, res) => {
+router.get('/products', auth, checkAmazonAuth, async (req, res) => {
     try {
         const productsResponse = await fetchProducts(req);
-
         res.json(productsResponse);
     } catch (error) {
         console.error('Error fetching products:', error);

@@ -1,27 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PricingRulesForm from '../components/PricingRulesForm';
 
 const Dashboard = () => {
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            const response = await fetch('/api/amazon/products', {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-                credentials: 'include'
-            });
-            if (response.status === 401) {
-                window.location.href = '/api/amazon-auth/login'; // Redirect to Amazon OAuth
-            } else {
-                const data = await response.json();
-                setProducts(data);
+        const checkAuth = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                navigate('/login');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/amazon/products', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setProducts(data);
+                } else if (response.status === 401) {
+                    localStorage.removeItem('token');
+                    navigate('/login');
+                }
+            } catch (error) {
+                console.error('Error fetching products:', error);
             }
         };
 
-        fetchProducts();
-    }, []);
+        checkAuth();
+    }, [navigate]);
 
     return (
         <div>
@@ -31,11 +45,9 @@ const Dashboard = () => {
                     <li key={product.id}>
                         {product.name} - ${product.price}
                         <PricingRulesForm productId={product.id} />
-                        {/* TODO: add buttons to edit/delete products */}
                     </li>
                 ))}
             </ul>
-            <button onClick={() => window.location.href = '/api/amazon-auth/login'}>Authorize with Amazon</button>
         </div>
     );
 };

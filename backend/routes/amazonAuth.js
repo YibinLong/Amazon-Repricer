@@ -34,7 +34,6 @@ router.get('/login', (req, res) => {
 router.get('/callback', async (req, res) => {
     const { code, state } = req.query;
 
-    // Validate the state parameter
     if (state !== req.session.oauthState) {
         return res.status(400).send('Invalid state parameter');
     }
@@ -54,14 +53,16 @@ router.get('/callback', async (req, res) => {
 
         const { access_token, refresh_token } = response.data;
 
-        // Save tokens to the user's session or database
+        // Save tokens to the user's session
         req.session.accessToken = access_token;
         req.session.refreshToken = refresh_token;
+        req.session.isAmazonAuthenticated = true;
 
-        res.redirect('/dashboard');
+        // Redirect to frontend dashboard
+        res.redirect('http://localhost:3000/dashboard');
     } catch (error) {
         console.error('Error exchanging authorization code for tokens:', error);
-        res.status(500).send('Authentication failed');
+        res.redirect('http://localhost:3000/login?error=amazon_auth_failed');
     }
 });
 

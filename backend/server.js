@@ -42,7 +42,7 @@ app.use('/api/pricing-rules', pricingRulesRoutes);
 app.use('/api/amazon-auth', amazonAuthRoutes);
 
 app.get('/', (req, res) => {
-  res.send('Amazon Repricer Backend');
+  res.send('Amazon Repricer Backend!');
 });
 
 app.listen(PORT, () => {
