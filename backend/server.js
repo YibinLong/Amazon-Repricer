@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
@@ -11,7 +10,7 @@ const pricingRulesRoutes = require('./routes/pricingRules');
 const amazonAuthRoutes = require('./routes/amazonAuth');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const port = process.env.PORT || 3001;
 
 // Configure CORS to allow credentials
 // DO NOT CHANGE 3000 - accepts from 3000 (AKA frontend)
@@ -46,6 +45,6 @@ app.get('/', (req, res) => {
   res.send('Amazon Repricer Backend!');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
