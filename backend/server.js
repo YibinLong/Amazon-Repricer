@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const session = require('express-session');
 
 const authRoutes = require('./routes/authRoutes');
 const protectedRoutes = require('./routes/protectedRoutes');
@@ -11,26 +10,12 @@ const personalProductsRoutes = require('./routes/personalProductRoutes');
 const app = express();
 const port = process.env.PORT || 3001;
 
-// Configure CORS to allow credentials
 // DO NOT CHANGE 3000 - accepts from 3000 (AKA frontend)
 app.use(cors({
-  origin: 'http://localhost:3000', 
-  credentials: true
+  origin: 'http://localhost:3000'
 }));
 
 app.use(express.json());
-
-// Configure session middleware
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'your_secret_key', // Use a secure secret in production
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: false, // Set to true if using HTTPS
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 // 1 day
-  }
-}));
 
 app.use('/api/auth', authRoutes);
 app.use('/api', protectedRoutes); 

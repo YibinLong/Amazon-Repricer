@@ -51,9 +51,6 @@ async function loginUser(req, res) {
         // create a JWT token
         const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '2h' });
 
-        // save token in session
-        req.session.token = token;
-
         // send token to frontend
         res.json({ token });
     } catch (error) {
