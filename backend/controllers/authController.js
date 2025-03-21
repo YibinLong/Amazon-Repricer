@@ -1,8 +1,7 @@
-
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const { createUser, findUserByEmail } = require('../models/user');
+const { createUser, findUserByEmail, findUserByUsername } = require('../models/user');
 
 const secret = process.env.JWT_SECRET;
 
@@ -33,13 +32,14 @@ async function registerUser(req, res) {
 
 // login route
 async function loginUser(req, res) {
-    const { email, password } = req.body;
-
     try {
-        // find user by email
-        const user = await findUserByEmail(email);
+        const { username, password } = req.body;
+        
+        // Find user by username
+        const user = await findUserByUsername(username);
+        
         if (!user) {
-            return res.status(400).json({ message: 'Email not found' });
+            return res.status(401).json({ message: 'Invalid username or password' });
         }
 
         // check password

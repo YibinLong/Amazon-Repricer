@@ -19,7 +19,18 @@ const findUserByEmail = async (email) => {
     }
 };
 
+const findUserByUsername = async (username) => {
+    try {
+        console.log('Finding user by username:', username);
+        return await knex('users').where({ username }).first();
+    } catch (error) {
+        console.error('Error finding user by username:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     createUser,
-    findUserByEmail
+    findUserByEmail,
+    findUserByUsername
 };
