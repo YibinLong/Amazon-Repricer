@@ -8,11 +8,6 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        /*
-        // UNCOMMENT FOR OAUTH
-        // REMOVE const fetchProducts = async () => {
-        const checkAuth = async () => {
-        */
         const fetchProducts = async () => {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -21,12 +16,6 @@ const Dashboard = () => {
             }
 
             try {
-                /*
-                // UNCOMMENT FOR OAUTH
-                // REMOVE const response = await fetch('http://localhost:3001/api/personal/products', {
-
-                const response = await fetch('/api/amazon/products', {
-                */
                 const response = await fetch('http://localhost:3001/api/personal/products', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -46,11 +35,6 @@ const Dashboard = () => {
                 console.error('Error fetching products:', error);
             }
         };
-        /*
-        // UNCOMMENT FOR OAUTH
-        // remove fetchProducts()
-        checkAuth();
-        */
         fetchProducts();
     }, [navigate]);
 

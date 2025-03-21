@@ -56,10 +56,6 @@ async function loginUser(req, res) {
 
         // send token to frontend
         res.json({ token });
-
-        // send token to frontend + tell it to redirect to Amazon OAuth
-        // res.json({ token, redirectToAmazon: true });
-
     } catch (error) {
         console.error('Login Error:', error);
         res.status(500).json({ message: 'Server Error' });
