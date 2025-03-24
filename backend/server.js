@@ -5,7 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const protectedRoutes = require('./routes/protectedRoutes');
 const productRoutes = require('./routes/products');
 const pricingRulesRoutes = require('./routes/pricingRules');
-const personalProductsRoutes = require('./routes/personalProductRoutes');
+const personalProductsRoutes = require('./routes/personalProductsRoutes');
 
 const app = express();
 const port = process.env.PORT || 3001;
