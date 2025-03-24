@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PricingRulesForm from '../components/PricingRulesForm';
+import axios from 'axios';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -16,22 +17,19 @@ const Dashboard = () => {
             }
 
             try {
-                const response = await fetch('http://localhost:3001/api/personal/products', {
+                const response = await axios.get('http://localhost:3001/api/personal/products', {
                     headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
+                        'Authorization': `Bearer ${token}`
                     }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    setProducts(data);
-                } else if (response.status === 401) {
+                })
+                
+                setProducts(response.data);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                if (error.response?.status === 401) {
                     localStorage.removeItem('token');
                     navigate('/login');
                 }
-            } catch (error) {
-                console.error('Error fetching products:', error);
             }
         };
         fetchProducts();

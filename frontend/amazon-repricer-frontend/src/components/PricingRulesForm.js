@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 
 const PricingRulesForm = ({ productId }) => {
@@ -7,19 +8,19 @@ const PricingRulesForm = ({ productId }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const response = await fetch(`/api/amazon/products/${productId}/pricing-rules`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify({ minPrice, maxPrice })
-        })
+        try {
+            await axios.post(`http://localhost:3001/api/amazon/products/${productId}/pricing-rules`,
+                { minPrice, maxPrice },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            )
 
-        if (response.ok) {
             alert('Pricing rules set successfully!')
-        } else {
-            alert('Failed to set pricing rules')
+        } catch (error) {
+            alert('Failed to set pricing rules');
         }
     }
 
