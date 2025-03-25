@@ -8,7 +8,7 @@ const pricingRulesRoutes = require('./routes/pricingRules');
 const personalProductsRoutes = require('./routes/personalProductsRoutes');
 
 const app = express();
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 
 // DO NOT CHANGE 3000 - accepts from 3000 (AKA frontend)
 app.use(cors({
@@ -27,6 +27,6 @@ app.get('/', (req, res) => {
   res.send('Amazon Repricer Backend!');
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
