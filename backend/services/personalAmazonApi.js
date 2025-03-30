@@ -9,6 +9,8 @@ const PERSONAL_REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const PERSONAL_CLIENT_ID = process.env.LWA_CLIENT_ID;
 const PERSONAL_CLIENT_SECRET = process.env.LWA_CLIENT_SECRET;
 
+const AMAZON_SELLER_ID = process.env.AMAZON_SELLER_ID
+
 const getPersonalAccessToken = async () => {
     try {
         const response = await axios.post('https://api.amazon.com/auth/o2/token', qs.stringify({
@@ -33,8 +35,9 @@ const fetchPersonalProducts = async () => {
     try {
         const accessToken = await getPersonalAccessToken();
 
+        // Reference: https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-reference#get-listings2021-08-01itemssellerid
         const response = await axios.get(
-            `${endpoint}/listings/2021-08-01/items/A2WXT5TCF2XWKB`, {
+            `${endpoint}/listings/2021-08-01/items/${AMAZON_SELLER_ID}`, {
                 params: {
                     marketplaceIds: marketplaceId,
                 },
