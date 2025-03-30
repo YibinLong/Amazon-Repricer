@@ -2,10 +2,9 @@ const axios = require('axios');
 const qs = require('querystring');
 require('dotenv').config();
 
-const endpoint = 'https://sellingpartnerapi-na.amazon.com/';
-const marketplaceId = 'A2EUQ1WTGCTBG2';
+const endpoint = 'https://sellingpartnerapi-na.amazon.com';
+const marketplaceId = 'A2EUQ1WTGCTBG2'; // Canadian Marketplace ID
 
-// Store these in your .env file
 const PERSONAL_REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const PERSONAL_CLIENT_ID = process.env.LWA_CLIENT_ID;
 const PERSONAL_CLIENT_SECRET = process.env.LWA_CLIENT_SECRET;
@@ -25,7 +24,7 @@ const getPersonalAccessToken = async () => {
 
         return response.data.access_token;
     } catch (error) {
-        console.error('Error getting personal access token:', error);
+        console.error('Error getting SP-API access token:', error);
         throw error;
     }    
 };
@@ -35,7 +34,7 @@ const fetchPersonalProducts = async () => {
         const accessToken = await getPersonalAccessToken();
 
         const response = await axios.get(
-            `${endpoint}listings/2021-08-01/items/A2WXT5TCF2XWKB`, {
+            `${endpoint}/listings/2021-08-01/items/A2WXT5TCF2XWKB`, {
                 params: {
                     marketplaceIds: marketplaceId,
                 },
