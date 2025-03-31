@@ -34,27 +34,35 @@ const getPersonalAccessToken = async () => {
 const fetchPersonalProducts = async () => {
     try {
         const accessToken = await getPersonalAccessToken();
+        let products = [];
+        let nextToken = null;
 
-        // Reference: https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-reference#get-listings2021-08-01itemssellerid
-        const response = await axios.get(
-            `${endpoint}/listings/2021-08-01/items/${AMAZON_SELLER_ID}`, {
-                params: {
-                    marketplaceIds: marketplaceId,
-                },
-                headers: {
-                    'x-amz-access-token': accessToken,
-                },
-            }
-        );
+        do {
+            // Reference: https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-reference#get-listings2021-08-01itemssellerid
+            const response = await axios.get(
+                `${endpoint}/listings/2021-08-01/items/${AMAZON_SELLER_ID}`, {
+                    params: {
+                        marketplaceIds: marketplaceId,
+                        ...(nextToken && { pageToken: nextToken })
+                    },
+                    headers: {
+                        'x-amz-access-token': accessToken,
+                    },
+                }
+            );
 
-        // Transform the data to a simpler format
-        const products = response.data.items.map(item => ({
-            sku: item.sku,
-            itemName: item.summaries[0].itemName,
-            asin: item.summaries[0].asin,
-            productType: item.summaries[0].productType,
-            createdDate: item.summaries[0].createdDate
-        }));
+            const fetchedProducts = response.data.items.map(item => ({
+                sku: item.sku,
+                itemName: item.summaries[0].itemName,
+                asin: item.summaries[0].asin,
+                productType: item.summaries[0].productType,
+                createdDate: item.summaries[0].createdDate,
+            }));
+
+            products = [...products, ...fetchedProducts];
+
+            nextToken = response.data.pagination.nextToken;
+        } while (nextToken);
 
         return products;
     } catch (error) {
